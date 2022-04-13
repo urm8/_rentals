@@ -28,4 +28,4 @@ WORKDIR /app
 COPY --from=build $VENV_PATH $VENV_PATH
 COPY . .
 EXPOSE 80
-CMD gunicorn --chdir /app example.wsgi:application -b :80 -w 1 --threads 8
+CMD python manage.py migrate && python manage.py collectstatic --noinput && python manage.py loaddata fixtures/initital.json; gunicorn --chdir /app example.wsgi:application -b :80 -w 1 --threads 8
