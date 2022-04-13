@@ -15,17 +15,20 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Rental',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=255)),
             ],
         ),
         migrations.CreateModel(
             name='Reservation',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('checkin', models.DateField(auto_now_add=True)),
                 ('checkout', models.DateField(blank=True, default=None, null=True)),
-                ('rental', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='rentals.rental')),
+                ('rental', models.ForeignKey(
+                    null=True, on_delete=django.db.models.deletion.SET_NULL, to='rentals.rental')),
             ],
         ),
     ]

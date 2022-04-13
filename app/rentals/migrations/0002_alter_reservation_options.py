@@ -13,6 +13,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AlterModelOptions(
             name='reservation',
-            options={'ordering': ('rental', django.db.models.expressions.OrderBy(django.db.models.expressions.F('checkin'), descending=True, nulls_first=True))},
+            options={'ordering': ('rental', django.db.models.expressions.OrderBy(
+                django.db.models.expressions.F('checkin'), descending=True, nulls_first=True))},
         ),
     ]
