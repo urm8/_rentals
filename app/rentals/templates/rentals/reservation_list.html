@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="description" content="basic reservations pre-rendered table" />
+    <meta
+      name="viewport"
+      content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width"
+    />
+    <title>Reservations table</title>
+  </head>
+  <body>
+    <h1>Reservations table:</h1>
+    <table style="width: 80%" border="4" cellpadding="11">
+      <tbody>
+        <tr>
+          <td>Rental_name&nbsp;</td>
+          <td>ID&nbsp;</td>
+          <td>Checkin&nbsp;</td>
+          <td>Checkout&nbsp;</td>
+          <td>Previous reservation,&nbsp;ID</td>
+        </tr>
+        {% for reservation in page_obj %}
+        <tr>
+          <td>{{reservation.rental.name}}</td>
+          <td>{{reservation.id}}</td>
+          <td>{{reservation.checkin}}</td>
+          <td>{{reservation.checkout}}</td>
+          <td>{{reservation.previous_reservation}}</td>
+        </tr>
+        {% empty %}
+        <tr>
+          Oups... Nothing to show
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div class="pagination">
+      <span class="step-links">
+        {% if page_obj.has_previous %}
+        <a href="?page=1">&laquo; first</a>
+        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+          Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">next</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+      </span>
+    </div>
+  </body>
+</html>

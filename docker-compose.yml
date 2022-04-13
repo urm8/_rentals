@@ -1,0 +1,44 @@
+version: "3.7"
+
+services:
+  postgres:
+    image: postgres:12.3
+    environment:
+      POSTGRES_DB: rental
+      POSTGRES_USER: rental
+      POSTGRES_PASSWORD: rental
+    volumes:
+      - db:/var/lib/postgresql/data:rw
+    shm_size: 1g
+    ports:
+      - "5432:5432"
+  db:
+    image: toloco/pgbouncer:1.16
+    environment:
+      DB_HOST: postgres
+      DB_USER: rental
+      DB_PASSWORD: rental
+      DB_PORT: 5432
+    depends_on:
+      - postgres
+    ports:
+      - "6432:6432"
+  app:
+    &django_conf
+    build:
+      context: ./app
+    depends_on:
+      - db
+    volumes:
+      - ./app:/app
+    environment:
+      &dev_env
+      DB_URI: postgres://rental:rental@db:6432/rental
+      DEBUG: 1
+      STAND: "DEV"
+      ALLOWED_HOSTS: "*"
+    ports:
+      - "8000:80"
+
+volumes:
+  db: {}
